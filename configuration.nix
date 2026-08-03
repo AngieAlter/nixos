@@ -50,6 +50,8 @@
     variant = "";
   };
 
+
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -69,6 +71,13 @@
     #media-session.enable = true;
   };
 
+programs.fish = {
+	enable = true;
+	interactiveShellInit = ''
+	set fish_greeting
+	'';
+};
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -76,10 +85,15 @@
   users.users."angie" = {
     isNormalUser = true;
     description = "Angie";
+    shell = pkgs.fish;
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       kdePackages.kate
     #  thunderbird
+	kdePackages.dolphin
+	kdePackages.ark
+	kdePackages.kdeconnect-kde
+	obsidian
     ];
   };
 
@@ -102,6 +116,9 @@
 	xrizer
 	opencomposite
 	wayvr
+	audacity
+	spotify
+	btop
 	inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
@@ -114,6 +131,8 @@ programs.steam = {
 programs.hyprland = {
 	enable = true;
 };
+
+programs.localsend.openFirewall = true;
 
 	services.wivrn = {
 		enable = true;
@@ -131,7 +150,6 @@ programs.hyprland = {
 
   # List services that you want to enable:
 
-  # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 
   # Open ports in the firewall.
