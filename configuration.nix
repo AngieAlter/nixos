@@ -119,6 +119,10 @@ programs.fish = {
 	audacity
 	spotify
 	btop
+	obs-studio
+	ryubing
+	haruna
+	blender
 	inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
