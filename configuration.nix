@@ -1,10 +1,12 @@
-{ config, pkgs, inputs, ... }:
-
 {
-  imports =
-    [
-     /etc/nixos/hardware-configuration.nix
-    ];
+  config,
+  pkgs,
+  inputs,
+  ...
+}: {
+  imports = [
+    /etc/nixos/hardware-configuration.nix
+  ];
 
   # Bootloader.
   boot.loader.grub.enable = true;
@@ -13,7 +15,7 @@
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -50,8 +52,6 @@
     variant = "";
   };
 
-
-
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -71,12 +71,12 @@
     #media-session.enable = true;
   };
 
-programs.fish = {
-	enable = true;
-	interactiveShellInit = ''
-	set fish_greeting
-	'';
-};
+  programs.fish = {
+    enable = true;
+    interactiveShellInit = ''
+      set fish_greeting
+    '';
+  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -86,14 +86,14 @@ programs.fish = {
     isNormalUser = true;
     description = "Angie";
     shell = pkgs.fish;
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = ["networkmanager" "wheel"];
     packages = with pkgs; [
       kdePackages.kate
-    #  thunderbird
-	kdePackages.dolphin
-	kdePackages.ark
-	kdePackages.kdeconnect-kde
-	obsidian
+      #  thunderbird
+      kdePackages.dolphin
+      kdePackages.ark
+      kdePackages.kdeconnect-kde
+      obsidian
     ];
   };
 
@@ -106,44 +106,44 @@ programs.fish = {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-	git
-	discord
-	microfetch
-	localsend
-	noctalia
-	kitty
-	pavucontrol
-	xrizer
-	opencomposite
-	wayvr
-	audacity
-	spotify
-	btop
-	obs-studio
-	ryubing
-	haruna
-	blender
-	inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
-];
+    git
+    discord
+    microfetch
+    localsend
+    noctalia
+    kitty
+    pavucontrol
+    xrizer
+    opencomposite
+    wayvr
+    audacity
+    spotify
+    btop
+    obs-studio
+    ryubing
+    haruna
+    blender
+    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #  wget
+  ];
 
-programs.steam = {
-	enable = true;
-};
+  programs.steam = {
+    enable = true;
+  };
 
-programs.hyprland = {
-	enable = true;
-};
+  programs.hyprland = {
+    enable = true;
+  };
 
-programs.localsend.openFirewall = true;
+  programs.localsend.openFirewall = true;
 
-	services.wivrn = {
-		enable = true;
-		openFirewall = true;
-		autoStart = true;
-		package = pkgs.wivrn.override {cudaSupport = true;};
-	};
+  services.wivrn = {
+    enable = true;
+    openFirewall = true;
+    autoStart = true;
+    package = pkgs.wivrn.override {cudaSupport = true;};
+  };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -163,5 +163,4 @@ programs.localsend.openFirewall = true;
   # networking.firewall.enable = false;
 
   system.stateVersion = "26.05"; # Did you read the comment?
-
 }
