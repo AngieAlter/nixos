@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
   imports =
@@ -22,19 +22,8 @@
   time.timeZone = "America/Montevideo";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = "en_GB.UTF-8";
 
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "es_UY.UTF-8";
-    LC_IDENTIFICATION = "es_UY.UTF-8";
-    LC_MEASUREMENT = "es_UY.UTF-8";
-    LC_MONETARY = "es_UY.UTF-8";
-    LC_NAME = "es_UY.UTF-8";
-    LC_NUMERIC = "es_UY.UTF-8";
-    LC_PAPER = "es_UY.UTF-8";
-    LC_TELEPHONE = "es_UY.UTF-8";
-    LC_TIME = "es_UY.UTF-8";
-  };
 
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
@@ -103,6 +92,16 @@ programs.fish = {
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+	nixpkgs = {
+		config.allowUnfreePredicate =
+		pkg:
+		builtins.elem (lib.getName pkg) [
+			"spotify"
+			"spotify-spotx"
+		];
+		overlays = [ inputs.spotx-nix.overlays.default ];
+	};
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -117,12 +116,13 @@ programs.fish = {
 	opencomposite
 	wayvr
 	audacity
-	spotify
+	spotify-spotx
 	btop
 	obs-studio
 	ryubing
 	haruna
 	blender
+	opentabletdriver
 	inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
@@ -133,6 +133,10 @@ programs.steam = {
 };
 
 programs.hyprland = {
+	enable = true;
+};
+
+programs.niri = {
 	enable = true;
 };
 

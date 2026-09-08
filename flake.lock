@@ -19,7 +19,45 @@
     "root": {
       "inputs": {
         "nixpkgs": "nixpkgs",
+        "spotx-nix": "spotx-nix",
         "zen-browser": "zen-browser"
+      }
+    },
+    "spotx-bash": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1785353934,
+        "narHash": "sha256-uQHYVrp1N/w4gKz5Magz3tvZBXttswDedF1wTwNdZuQ=",
+        "owner": "SpotX-Official",
+        "repo": "SpotX-Bash",
+        "rev": "03207b611740fc889d050d7a2dbd3bdddd30bd98",
+        "type": "github"
+      },
+      "original": {
+        "owner": "SpotX-Official",
+        "repo": "SpotX-Bash",
+        "type": "github"
+      }
+    },
+    "spotx-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "spotx-bash": "spotx-bash"
+      },
+      "locked": {
+        "lastModified": 1785612911,
+        "narHash": "sha256-1TOho4bhDIpc9/IcluvesXDetrE6/IqEEnlH/Zs4sr0=",
+        "owner": "SpotX-Official",
+        "repo": "SpotX-Nix",
+        "rev": "a628ae707426e174497005fef777992c96a6158c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "SpotX-Official",
+        "repo": "SpotX-Nix",
+        "type": "github"
       }
     },
     "zen-browser": {

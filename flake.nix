@@ -8,7 +8,10 @@
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
+	spotx-nix = {
+  		url = "github:SpotX-Official/SpotX-Nix";
+  		inputs.nixpkgs.follows = "nixpkgs";
+	};
   };
 
 	
