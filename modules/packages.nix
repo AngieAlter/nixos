@@ -1,0 +1,30 @@
+{
+  pkgs,
+  inputs,
+  ...
+}: {
+  environment.systemPackages = with pkgs; [
+    git
+    neovim
+    discord
+    microfetch
+    localsend
+    firefox
+    noctalia
+    alejandra
+    kitty
+    pavucontrol
+    xrizer
+    opencomposite
+    wayvr
+    audacity
+    spotify-spotx
+    btop
+    obs-studio
+    ryubing
+    haruna
+    blender
+    opentabletdriver
+    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+  ];
+}

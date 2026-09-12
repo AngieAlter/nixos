@@ -1,19 +1,24 @@
-{ config, lib, pkgs, inputs, ... }:
-
 {
-  imports =
-    [
-     /etc/nixos/hardware-configuration.nix
-    ];
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: {
+  imports = [
+    /etc/nixos/hardware-configuration.nix
+    inputs.umbriel.nixosModules.default
+    ../modules
+  ];
 
   # Bootloader.
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/vda";
   boot.loader.grub.useOSProber = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "angie"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -23,7 +28,6 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_GB.UTF-8";
-
 
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
@@ -38,8 +42,6 @@
     layout = "us";
     variant = "";
   };
-
-
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -57,15 +59,16 @@
 
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
+
     #media-session.enable = true;
   };
 
-programs.fish = {
-	enable = true;
-	interactiveShellInit = ''
-	set fish_greeting
-	'';
-};
+  programs.fish = {
+    enable = true;
+    interactiveShellInit = ''
+      set fish_greeting
+    '';
+  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -75,79 +78,53 @@ programs.fish = {
     isNormalUser = true;
     description = "Angie";
     shell = pkgs.fish;
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = ["networkmanager" "wheel"];
     packages = with pkgs; [
       kdePackages.kate
-    #  thunderbird
-	kdePackages.dolphin
-	kdePackages.ark
-	kdePackages.kdeconnect-kde
-	obsidian
+      #  thunderbird
+      kdePackages.dolphin
+      kdePackages.ark
+      kdePackages.kdeconnect-kde
+      obsidian
     ];
   };
 
-  # Install firefox.
-  programs.firefox.enable = true;
+  mediaServer.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-	nixpkgs = {
-		config.allowUnfreePredicate =
-		pkg:
-		builtins.elem (lib.getName pkg) [
-			"spotify"
-			"spotify-spotx"
-		];
-		overlays = [ inputs.spotx-nix.overlays.default ];
-	};
+  nixpkgs = {
+    config.allowUnfreePredicate = pkg:
+      builtins.elem (lib.getName pkg) [
+        "spotify"
+        "spotify-spotx"
+      ];
+    overlays = [inputs.spotx-nix.overlays.default];
+  };
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-	git
-	discord
-	microfetch
-	localsend
-	noctalia
-	kitty
-	pavucontrol
-	xrizer
-	opencomposite
-	wayvr
-	audacity
-	spotify-spotx
-	btop
-	obs-studio
-	ryubing
-	haruna
-	blender
-	opentabletdriver
-	inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
-];
+  programs.steam = {
+    enable = true;
+  };
 
-programs.steam = {
-	enable = true;
-};
+  programs.hyprland = {
+    enable = true;
+  };
 
-programs.hyprland = {
-	enable = true;
-};
+  programs.niri = {
+    enable = true;
+  };
 
-programs.niri = {
-	enable = true;
-};
+  programs.umbriel.enable = true;
 
-programs.localsend.openFirewall = true;
+  programs.localsend.openFirewall = true;
 
-	services.wivrn = {
-		enable = true;
-		openFirewall = true;
-		autoStart = true;
-		package = pkgs.wivrn.override {cudaSupport = true;};
-	};
+  services.wivrn = {
+    enable = true;
+    openFirewall = true;
+    autoStart = true;
+    package = pkgs.wivrn.override {cudaSupport = true;};
+  };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -167,5 +144,4 @@ programs.localsend.openFirewall = true;
   # networking.firewall.enable = false;
 
   system.stateVersion = "26.05"; # Did you read the comment?
-
 }
