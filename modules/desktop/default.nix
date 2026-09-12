@@ -1,6 +1,5 @@
-{ ... }:
-{
-	imports = [
-		./umbriel.nix
-	];
+{...}: {
+  imports = [
+    ./umbriel.nix
+  ];
 }
